@@ -61,6 +61,7 @@ const clampValue = () => {
 .slider-field {
   display: grid;
   gap: 0.6rem;
+  width: 100%;
 }
 
 label {
@@ -68,6 +69,7 @@ label {
   gap: 0.4rem;
   font-weight: 600;
   color: #2b3c50;
+  width: 100%;
 }
 
 .slider-field__inputs {
@@ -91,7 +93,11 @@ label {
 }
 
 .slider-field__range {
+  display: block;
   width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   accent-color: #0b3a6e;
 }
 </style>
