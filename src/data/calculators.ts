@@ -48,6 +48,12 @@ export const calculators: CalculatorInfo[] = [
     description: "Plan monthly investments to reach a financial goal.",
     path: "/goal-planner",
   },
+  {
+    id: "retirement",
+    title: "Retirement",
+    description: "Estimate retirement corpus and monthly savings needed.",
+    path: "/retirement-calculator",
+  },
   // {
   //   id: "mutual-fund-returns",
   //   title: "Mutual Fund Returns Calculator",

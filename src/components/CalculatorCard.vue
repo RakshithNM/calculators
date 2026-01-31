@@ -23,6 +23,8 @@ defineProps<{
   padding: 1.25rem;
   border: 1px solid rgba(11, 58, 110, 0.16);
   border-radius: 16px;
+  border-bottom-right-radius: 50%;
+  corner-shape: squircle;
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(6px);
   box-shadow: 0 18px 36px rgba(14, 28, 50, 0.12);

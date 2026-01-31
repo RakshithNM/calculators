@@ -7,7 +7,7 @@ import { calculators } from "../data/calculators";
   <main class="shell">
     <section class="hero">
       <div>
-        <p class="eyebrow">Mutual Funds + Market Tools</p>
+        <p class="eyebrow">Financial Calculators 🔢</p>
         <h1>Investment calculators built for confident decisions.</h1>
         <p class="subhead">
           Track SIPs, forecast future value, compare CAGR, and plan milestones
