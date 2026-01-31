@@ -141,7 +141,14 @@ h1 {
 .results {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .results span {
@@ -154,6 +161,18 @@ h1 {
 .results strong {
   font-size: 1.3rem;
   color: #0b3a6e;
+}
+
+.calculator-layout {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  align-items: start;
+}
+
+.calculator-results {
+  display: grid;
+  gap: 1.5rem;
 }
 
 .chart {
@@ -184,6 +203,10 @@ h1 {
 
 @media (max-width: 900px) {
   .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .calculator-layout {
     grid-template-columns: 1fr;
   }
 }

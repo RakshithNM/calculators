@@ -51,6 +51,7 @@ ul {
 button,
 .card__link {
   justify-self: start;
+  align-items: center;
   border: none;
   background: #0b3a6e;
   color: #fff;
