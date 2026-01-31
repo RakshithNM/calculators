@@ -3,6 +3,7 @@ import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 import { calculators } from "../data/calculators";
 import SliderField from "../components/SliderField.vue";
+import PieChart from "../components/PieChart.vue";
 
 const props = defineProps<{
   calculatorId: string;
@@ -121,6 +122,13 @@ const formatCurrency = (value: number) =>
             <span>Total value</span>
             <strong>{{ formatCurrency(sipResult.totalValue) }}</strong>
           </div>
+        </div>
+
+        <div class="chart">
+          <PieChart
+            :invested="sipResult.investedAmount"
+            :returns="sipResult.estimatedReturns"
+          />
         </div>
       </div>
 
