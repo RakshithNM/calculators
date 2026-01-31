@@ -139,6 +139,21 @@ h1 {
   background: #fff;
 }
 
+.select-field {
+  display: grid;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #2b3c50;
+}
+
+.select-field select {
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid rgba(15, 30, 45, 0.2);
+  font: inherit;
+  background: #fff;
+}
+
 .results {
   display: grid;
   gap: 1rem;

@@ -22,6 +22,16 @@ const lumpSumPrincipal = ref(100000);
 const lumpSumReturnRate = ref(10);
 const lumpSumYears = ref(5);
 const periodicInvestment = ref(25000);
+const investmentFrequency = ref<"monthly" | "quarterly" | "biannual" | "yearly">(
+  "yearly"
+);
+
+const frequencyOptions = [
+  { value: "monthly", label: "Monthly", perYear: 12 },
+  { value: "quarterly", label: "Quarterly", perYear: 4 },
+  { value: "biannual", label: "Biannual", perYear: 2 },
+  { value: "yearly", label: "Yearly", perYear: 1 },
+];
 
 const goBack = () => {
   router.push("/");
@@ -74,6 +84,7 @@ const futureValueResult = computed(() => {
   const rate = Number(lumpSumReturnRate.value) || 0;
   const years = Number(lumpSumYears.value) || 0;
   const periodic = Number(periodicInvestment.value) || 0;
+  const frequency = frequencyOptions.find((option) => option.value === investmentFrequency.value)?.perYear ?? 1;
 
   if (principal <= 0 || years <= 0) {
     return {
@@ -84,10 +95,14 @@ const futureValueResult = computed(() => {
   }
 
   const annualRate = rate / 100;
-  const futurePrincipal = principal * Math.pow(1 + annualRate, years);
-  const futurePeriodic = annualRate === 0 ? periodic * years : periodic * (((Math.pow(1 + (annualRate/1), (years * 1)) - 1)) / (annualRate/1));
+  const periods = Math.max(0, years * frequency);
+  const periodicRate = frequency === 0 ? 0 : annualRate / frequency;
+  const growthFactor = Math.pow(1 + periodicRate, periods);
+  const futurePrincipal = principal * growthFactor;
+  const futurePeriodic = annualRate === 0 ? periodic * years : periodic * ((Math.pow(1 + periodicRate, periods) - 1) / periodicRate);
+
   const totalValue = futurePrincipal + futurePeriodic;
-  const investedAmount = Math.max(0, principal + periodic * years);
+  const investedAmount = Math.max(0, principal + periodic * periods);
   const estimatedReturns = Math.max(0, totalValue - investedAmount);
 
   return {
@@ -204,9 +219,21 @@ const formatCurrency = (value: number) =>
               :max="40"
               :step="1"
             />
+            <label class="select-field">
+              <span>Investment frequency</span>
+              <select v-model="investmentFrequency">
+                <option
+                  v-for="option in frequencyOptions"
+                  :key="option.value"
+                  :value="option.value"
+                >
+                  {{ option.label }}
+                </option>
+              </select>
+            </label>
             <SliderField
               v-model="periodicInvestment"
-              label="Annual periodic investment"
+              label="Periodic investment"
               unit="₹"
               :min="0"
               :max="1000000"
