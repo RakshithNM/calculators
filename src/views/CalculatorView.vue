@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 import { calculators } from "../data/calculators";
 
@@ -12,9 +12,58 @@ const calculator = computed(() =>
   calculators.find((item) => item.id === props.calculatorId)
 );
 
+const monthlyInvestment = ref(5000);
+const expectedReturnRate = ref(12);
+const timePeriodYears = ref(10);
+
 const goBack = () => {
   router.push("/");
 };
+
+const sipResult = computed(() => {
+  if (!calculator.value || calculator.value.id !== "sip") {
+    return null;
+  }
+
+  const investment = Number(monthlyInvestment.value) || 0;
+  const rate = Number(expectedReturnRate.value) || 0;
+  const years = Number(timePeriodYears.value) || 0;
+  const months = Math.max(0, years * 12);
+
+  if (months === 0 || investment <= 0) {
+    return {
+      investedAmount: 0,
+      estimatedReturns: 0,
+      totalValue: 0,
+    };
+  }
+
+  const rateValue = rate / 100;
+  const monthlyRate = (Math.pow((1 + rateValue), (1 / 12)) - 1);
+  let totalValue = 0;
+
+  if (monthlyRate === 0) {
+    totalValue = investment * months;
+  } else {
+    totalValue = investment * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate);
+  }
+
+  const investedAmount = investment * months;
+  const estimatedReturns = Math.max(0, totalValue - investedAmount);
+
+  return {
+    investedAmount,
+    estimatedReturns,
+    totalValue,
+  };
+});
+
+const formatCurrency = (value: number) =>
+  new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0,
+  }).format(value);
 </script>
 
 <template>
@@ -29,7 +78,55 @@ const goBack = () => {
         <button type="button" class="ghost" @click="goBack">All tools</button>
       </div>
 
-      <div class="detail__panel">
+      <div class="detail__panel" v-if="calculator.id === 'sip' && sipResult">
+        <h2>Plan your SIP</h2>
+        <form class="form" @submit.prevent>
+          <label>
+            Monthly investment (₹)
+            <input
+              v-model.number="monthlyInvestment"
+              type="number"
+              min="0"
+              step="500"
+            />
+          </label>
+          <label>
+            Expected return rate (% p.a.)
+            <input
+              v-model.number="expectedReturnRate"
+              type="number"
+              min="0"
+              step="0.1"
+            />
+          </label>
+          <label>
+            Time period (years)
+            <input
+              v-model.number="timePeriodYears"
+              type="number"
+              min="0"
+              step="1"
+            />
+          </label>
+        </form>
+
+        <div class="results">
+          <div>
+            <span>Invested amount</span>
+            <strong>{{ formatCurrency(sipResult.investedAmount) }}</strong>
+          </div>
+          <div>
+            <span>Estimated returns</span>
+            <strong>{{ formatCurrency(sipResult.estimatedReturns) }}</strong>
+          </div>
+          <div>
+            <span>Total value</span>
+            <strong>{{ formatCurrency(sipResult.totalValue) }}</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail__panel" v-else>
         <h2>Inputs you'll need</h2>
         <ul>
           <li v-for="field in calculator.fields" :key="field">

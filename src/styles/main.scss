@@ -117,6 +117,45 @@ h1 {
   color: #33465b;
 }
 
+.form {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.form label {
+  display: grid;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #2b3c50;
+}
+
+.form input {
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid rgba(15, 30, 45, 0.2);
+  font: inherit;
+  background: #fff;
+}
+
+.results {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.results span {
+  display: block;
+  font-size: 0.85rem;
+  color: #3c536b;
+  margin-bottom: 0.35rem;
+}
+
+.results strong {
+  font-size: 1.3rem;
+  color: #0b3a6e;
+}
+
 .note {
   margin: 0;
   color: #2b3c50;
