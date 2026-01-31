@@ -21,6 +21,7 @@ const timePeriodYears = ref(10);
 const lumpSumPrincipal = ref(100000);
 const lumpSumReturnRate = ref(10);
 const lumpSumYears = ref(5);
+const periodicInvestment = ref(25000);
 
 const goBack = () => {
   router.push("/");
@@ -72,6 +73,7 @@ const futureValueResult = computed(() => {
   const principal = Number(lumpSumPrincipal.value) || 0;
   const rate = Number(lumpSumReturnRate.value) || 0;
   const years = Number(lumpSumYears.value) || 0;
+  const periodic = Number(periodicInvestment.value) || 0;
 
   if (principal <= 0 || years <= 0) {
     return {
@@ -81,11 +83,15 @@ const futureValueResult = computed(() => {
     };
   }
 
-  const totalValue = principal * Math.pow(1 + rate / 100, years);
-  const estimatedReturns = Math.max(0, totalValue - principal);
+  const annualRate = rate / 100;
+  const futurePrincipal = principal * Math.pow(1 + annualRate, years);
+  const futurePeriodic = annualRate === 0 ? periodic * years : periodic * (((Math.pow(1 + (annualRate/1), (years * 1)) - 1)) / (annualRate/1));
+  const totalValue = futurePrincipal + futurePeriodic;
+  const investedAmount = Math.max(0, principal + periodic * years);
+  const estimatedReturns = Math.max(0, totalValue - investedAmount);
 
   return {
-    investedAmount: principal,
+    investedAmount,
     estimatedReturns,
     totalValue,
   };
@@ -161,6 +167,79 @@ const formatCurrency = (value: number) =>
               <PieChart
                 :invested="sipResult.investedAmount"
                 :returns="sipResult.estimatedReturns"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="detail__panel"
+        v-else-if="calculator.id === 'future-value' && futureValueResult"
+      >
+        <h2>Future value</h2>
+        <div class="calculator-layout">
+          <form class="form" @submit.prevent>
+            <SliderField
+              v-model="lumpSumPrincipal"
+              label="Principal amount"
+              unit="₹"
+              :min="0"
+              :max="5000000"
+              :step="10000"
+            />
+            <SliderField
+              v-model="lumpSumReturnRate"
+              label="Expected return rate"
+              unit="% p.a."
+              :min="0"
+              :max="20"
+              :step="0.1"
+            />
+            <SliderField
+              v-model="lumpSumYears"
+              label="Time period"
+              unit="years"
+              :min="0"
+              :max="40"
+              :step="1"
+            />
+            <SliderField
+              v-model="periodicInvestment"
+              label="Annual periodic investment"
+              unit="₹"
+              :min="0"
+              :max="1000000"
+              :step="5000"
+            />
+          </form>
+
+          <div class="calculator-results">
+            <div class="results">
+              <div class="result-card result-card--invested">
+                <span>Invested amount</span>
+                <strong>{{
+                  formatCurrency(futureValueResult.investedAmount)
+                }}</strong>
+              </div>
+              <div class="result-card result-card--returns">
+                <span>Estimated returns</span>
+                <strong>{{
+                  formatCurrency(futureValueResult.estimatedReturns)
+                }}</strong>
+              </div>
+              <div class="result-card result-card--total">
+                <span>Total value</span>
+                <strong>{{
+                  formatCurrency(futureValueResult.totalValue)
+                }}</strong>
+              </div>
+            </div>
+
+            <div class="chart">
+              <PieChart
+                :invested="futureValueResult.investedAmount"
+                :returns="futureValueResult.estimatedReturns"
               />
             </div>
           </div>
