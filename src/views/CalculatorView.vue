@@ -2,6 +2,7 @@
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 import { calculators } from "../data/calculators";
+import SliderField from "../components/SliderField.vue";
 
 const props = defineProps<{
   calculatorId: string;
@@ -81,33 +82,30 @@ const formatCurrency = (value: number) =>
       <div class="detail__panel" v-if="calculator.id === 'sip' && sipResult">
         <h2>Plan your SIP</h2>
         <form class="form" @submit.prevent>
-          <label>
-            Monthly investment (₹)
-            <input
-              v-model.number="monthlyInvestment"
-              type="number"
-              min="0"
-              step="500"
-            />
-          </label>
-          <label>
-            Expected return rate (% p.a.)
-            <input
-              v-model.number="expectedReturnRate"
-              type="number"
-              min="0"
-              step="0.1"
-            />
-          </label>
-          <label>
-            Time period (years)
-            <input
-              v-model.number="timePeriodYears"
-              type="number"
-              min="0"
-              step="1"
-            />
-          </label>
+          <SliderField
+            v-model="monthlyInvestment"
+            label="Monthly investment"
+            unit="₹"
+            :min="0"
+            :max="200000"
+            :step="500"
+          />
+          <SliderField
+            v-model="expectedReturnRate"
+            label="Expected return rate"
+            unit="% p.a."
+            :min="0"
+            :max="30"
+            :step="0.1"
+          />
+          <SliderField
+            v-model="timePeriodYears"
+            label="Time period"
+            unit="years"
+            :min="0"
+            :max="40"
+            :step="1"
+          />
         </form>
 
         <div class="results">
