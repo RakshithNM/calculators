@@ -1,0 +1,144 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap");
+
+:root {
+  font-family: "Space Grotesk", "Trebuchet MS", sans-serif;
+  color: #101828;
+  background: #f3f5f8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, #edf6ff, transparent 55%),
+    radial-gradient(circle at 20% 70%, #fff3de, transparent 50%),
+    #f7f9fb;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+.shell {
+  padding: 3.5rem clamp(1.5rem, 3vw, 4rem);
+  display: grid;
+  gap: 2.5rem;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 2rem;
+  align-items: center;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.75rem;
+  color: #3a5166;
+  margin: 0 0 0.75rem;
+}
+
+h1 {
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  margin: 0 0 1rem;
+}
+
+.subhead {
+  font-size: 1.05rem;
+  color: #2f4055;
+  max-width: 38rem;
+}
+
+.panel {
+  display: grid;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #0b3a6e 0%, #1f6fd5 100%);
+  color: #fff;
+  box-shadow: 0 20px 40px rgba(13, 43, 80, 0.25);
+}
+
+.panel span {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+}
+
+.panel strong {
+  display: block;
+  font-size: 1.05rem;
+  margin-top: 0.3rem;
+}
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.detail {
+  display: grid;
+  gap: 2rem;
+  align-items: start;
+}
+
+.detail__header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detail__panel {
+  padding: 1.75rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(10, 20, 30, 0.12);
+  box-shadow: 0 16px 30px rgba(14, 28, 50, 0.08);
+}
+
+.detail__panel h2 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+}
+
+.detail__panel ul {
+  margin: 0 0 1rem;
+  padding-left: 1.25rem;
+  color: #33465b;
+}
+
+.note {
+  margin: 0;
+  color: #2b3c50;
+}
+
+.ghost {
+  border: 1px solid rgba(11, 58, 110, 0.3);
+  background: transparent;
+  color: #0b3a6e;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ghost:hover {
+  border-color: rgba(11, 58, 110, 0.6);
+  background: rgba(11, 58, 110, 0.08);
+}
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+}
