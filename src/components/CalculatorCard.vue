@@ -80,7 +80,7 @@ button,
   background: linear-gradient(135deg, #0b3a6e, #1f6fd5);
   color: #fff;
   padding: 0.55rem 1rem;
-  border-radius: 999px;
+  border-radius: 16px;
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;

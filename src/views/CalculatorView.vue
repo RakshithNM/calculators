@@ -33,6 +33,24 @@ const frequencyOptions = [
   { value: "yearly", label: "Yearly", perYear: 1 },
 ];
 
+const simpleInterestPrincipal = ref(100000);
+const simpleInterestRate = ref(8);
+const simpleInterestYears = ref(5);
+
+const compoundInterestPrincipal = ref(100000);
+const compoundInterestRate = ref(10);
+const compoundInterestYears = ref(5);
+const compoundFrequency = ref<"yearly" | "semiannual" | "quarterly" | "monthly">(
+  "yearly"
+);
+
+const compoundFrequencyOptions = [
+  { value: "yearly", label: "Yearly", perYear: 1 },
+  { value: "semiannual", label: "Semiannual", perYear: 2 },
+  { value: "quarterly", label: "Quarterly", perYear: 4 },
+  { value: "monthly", label: "Monthly", perYear: 12 },
+];
+
 const goBack = () => {
   router.push("/");
 };
@@ -120,6 +138,51 @@ const futureValueResult = computed(() => {
     periodicAmount: periodicTotal,
     estimatedReturns,
     totalValue,
+  };
+});
+
+const simpleInterestResult = computed(() => {
+  if (!calculator.value || calculator.value.id !== "simple-interest") {
+    return null;
+  }
+
+  const principal = Number(simpleInterestPrincipal.value) || 0;
+  const rate = Number(simpleInterestRate.value) || 0;
+  const years = Number(simpleInterestYears.value) || 0;
+
+  const interest = (principal * rate * years) / 100;
+  const totalValue = principal + interest;
+
+  return {
+    principal: Math.max(0, principal),
+    interest: Math.max(0, interest),
+    totalValue: Math.max(0, totalValue),
+  };
+});
+
+const compoundInterestResult = computed(() => {
+  if (!calculator.value || calculator.value.id !== "compound-interest") {
+    return null;
+  }
+
+  const principal = Number(compoundInterestPrincipal.value) || 0;
+  const rate = Number(compoundInterestRate.value) || 0;
+  const years = Number(compoundInterestYears.value) || 0;
+  const frequency =
+    compoundFrequencyOptions.find(
+      (option) => option.value === compoundFrequency.value
+    )?.perYear ?? 1;
+
+  const periods = Math.max(0, years * frequency);
+  const periodicRate = frequency === 0 ? 0 : rate / 100 / frequency;
+  const totalValue =
+    periods === 0 ? principal : principal * Math.pow(1 + periodicRate, periods);
+  const interest = Math.max(0, totalValue - principal);
+
+  return {
+    principal: Math.max(0, principal),
+    interest,
+    totalValue: Math.max(0, totalValue),
   };
 });
 
@@ -284,6 +347,148 @@ const formatCurrency = (value: number) =>
               <PieChart
                 :invested="futureValueResult.investedAmount"
                 :returns="futureValueResult.estimatedReturns"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="detail__panel"
+        v-else-if="calculator.id === 'simple-interest' && simpleInterestResult"
+      >
+        <h2>Simple interest</h2>
+        <div class="calculator-layout">
+          <form class="form" @submit.prevent>
+            <SliderField
+              v-model="simpleInterestPrincipal"
+              label="Principal amount"
+              unit="₹"
+              :min="0"
+              :max="5000000"
+              :step="10000"
+            />
+            <SliderField
+              v-model="simpleInterestRate"
+              label="Interest rate"
+              unit="% p.a."
+              :min="0"
+              :max="20"
+              :step="0.1"
+            />
+            <SliderField
+              v-model="simpleInterestYears"
+              label="Time period"
+              unit="years"
+              :min="0"
+              :max="100"
+              :step="1"
+            />
+          </form>
+
+          <div class="calculator-results">
+            <div class="results">
+              <div class="result-card result-card--invested">
+                <span>Principal amount</span>
+                <strong>{{
+                  formatCurrency(simpleInterestResult.principal)
+                }}</strong>
+              </div>
+              <div class="result-card result-card--returns">
+                <span>Estimated interest</span>
+                <strong>{{
+                  formatCurrency(simpleInterestResult.interest)
+                }}</strong>
+              </div>
+              <div class="result-card result-card--total">
+                <span>Total value</span>
+                <strong>{{
+                  formatCurrency(simpleInterestResult.totalValue)
+                }}</strong>
+              </div>
+            </div>
+
+            <div class="chart">
+              <PieChart
+                :invested="simpleInterestResult.principal"
+                :returns="simpleInterestResult.interest"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="detail__panel"
+        v-else-if="calculator.id === 'compound-interest' && compoundInterestResult"
+      >
+        <h2>Compound interest</h2>
+        <div class="calculator-layout">
+          <form class="form" @submit.prevent>
+            <SliderField
+              v-model="compoundInterestPrincipal"
+              label="Principal amount"
+              unit="₹"
+              :min="0"
+              :max="5000000"
+              :step="10000"
+            />
+            <SliderField
+              v-model="compoundInterestRate"
+              label="Interest rate"
+              unit="% p.a."
+              :min="0"
+              :max="20"
+              :step="0.1"
+            />
+            <SliderField
+              v-model="compoundInterestYears"
+              label="Time period"
+              unit="years"
+              :min="0"
+              :max="100"
+              :step="1"
+            />
+            <label class="select-field">
+              <span>Compounding frequency</span>
+              <select v-model="compoundFrequency">
+                <option
+                  v-for="option in compoundFrequencyOptions"
+                  :key="option.value"
+                  :value="option.value"
+                >
+                  {{ option.label }}
+                </option>
+              </select>
+            </label>
+          </form>
+
+          <div class="calculator-results">
+            <div class="results">
+              <div class="result-card result-card--invested">
+                <span>Principal amount</span>
+                <strong>{{
+                  formatCurrency(compoundInterestResult.principal)
+                }}</strong>
+              </div>
+              <div class="result-card result-card--returns">
+                <span>Estimated interest</span>
+                <strong>{{
+                  formatCurrency(compoundInterestResult.interest)
+                }}</strong>
+              </div>
+              <div class="result-card result-card--total">
+                <span>Total value</span>
+                <strong>{{
+                  formatCurrency(compoundInterestResult.totalValue)
+                }}</strong>
+              </div>
+            </div>
+
+            <div class="chart">
+              <PieChart
+                :invested="compoundInterestResult.principal"
+                :returns="compoundInterestResult.interest"
               />
             </div>
           </div>
