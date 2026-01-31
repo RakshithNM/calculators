@@ -42,6 +42,12 @@ export const calculators: CalculatorInfo[] = [
     description: "Calculate Compound Annual Growth Rate of investments.",
     path: "/cagr",
   },
+  {
+    id: "goal-planner",
+    title: "Goal Planner",
+    description: "Plan monthly investments to reach a financial goal.",
+    path: "/goal-planner",
+  },
   // {
   //   id: "mutual-fund-returns",
   //   title: "Mutual Fund Returns Calculator",
