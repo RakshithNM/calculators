@@ -18,6 +18,10 @@ const monthlyInvestment = ref(5000);
 const expectedReturnRate = ref(12);
 const timePeriodYears = ref(10);
 
+const lumpSumPrincipal = ref(100000);
+const lumpSumReturnRate = ref(10);
+const lumpSumYears = ref(5);
+
 const goBack = () => {
   router.push("/");
 };
@@ -55,6 +59,33 @@ const sipResult = computed(() => {
 
   return {
     investedAmount,
+    estimatedReturns,
+    totalValue,
+  };
+});
+
+const futureValueResult = computed(() => {
+  if (!calculator.value || calculator.value.id !== "future-value") {
+    return null;
+  }
+
+  const principal = Number(lumpSumPrincipal.value) || 0;
+  const rate = Number(lumpSumReturnRate.value) || 0;
+  const years = Number(lumpSumYears.value) || 0;
+
+  if (principal <= 0 || years <= 0) {
+    return {
+      investedAmount: Math.max(0, principal),
+      estimatedReturns: 0,
+      totalValue: Math.max(0, principal),
+    };
+  }
+
+  const totalValue = principal * Math.pow(1 + rate / 100, years);
+  const estimatedReturns = Math.max(0, totalValue - principal);
+
+  return {
+    investedAmount: principal,
     estimatedReturns,
     totalValue,
   };
@@ -112,15 +143,15 @@ const formatCurrency = (value: number) =>
 
           <div class="calculator-results">
             <div class="results">
-              <div>
+              <div class="result-card result-card--invested">
                 <span>Invested amount</span>
                 <strong>{{ formatCurrency(sipResult.investedAmount) }}</strong>
               </div>
-              <div>
+              <div class="result-card result-card--returns">
                 <span>Estimated returns</span>
                 <strong>{{ formatCurrency(sipResult.estimatedReturns) }}</strong>
               </div>
-              <div>
+              <div class="result-card result-card--total">
                 <span>Total value</span>
                 <strong>{{ formatCurrency(sipResult.totalValue) }}</strong>
               </div>

@@ -2,7 +2,6 @@
 defineProps<{
   title: string;
   description: string;
-  fields: string[];
   to: string;
 }>();
 </script>
@@ -13,9 +12,6 @@ defineProps<{
       <h3>{{ title }}</h3>
       <p>{{ description }}</p>
     </header>
-    <ul>
-      <li v-for="field in fields" :key="field">{{ field }}</li>
-    </ul>
     <RouterLink class="card__link" :to="to">Open Calculator</RouterLink>
   </article>
 </template>
@@ -27,6 +23,7 @@ defineProps<{
   padding: 1.25rem;
   border: 1px solid rgba(10, 20, 30, 0.12);
   border-radius: 16px;
+  corner-shape: squircle;
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(6px);
   box-shadow: 0 14px 30px rgba(14, 28, 50, 0.08);
@@ -57,6 +54,7 @@ button,
   color: #fff;
   padding: 0.55rem 1rem;
   border-radius: 999px;
+  corner-shape: squircle;
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;

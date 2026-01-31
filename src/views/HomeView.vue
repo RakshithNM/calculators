@@ -36,7 +36,6 @@ import { calculators } from "../data/calculators";
         :key="calc.id"
         :title="calc.title"
         :description="calc.description"
-        :fields="calc.fields"
         :to="calc.path"
       />
     </section>
