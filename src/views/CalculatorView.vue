@@ -17,6 +17,7 @@ const calculator = computed(() =>
 const monthlyInvestment = ref(5000);
 const expectedReturnRate = ref(12);
 const timePeriodYears = ref(10);
+const stepUpPercentage = ref(10);
 
 const lumpSumPrincipal = ref(100000);
 const lumpSumReturnRate = ref(10);
@@ -51,6 +52,10 @@ const compoundFrequencyOptions = [
   { value: "monthly", label: "Monthly", perYear: 12 },
 ];
 
+const cagrStartValue = ref(100000);
+const cagrEndValue = ref(180000);
+const cagrYears = ref(5);
+
 const goBack = () => {
   router.push("/");
 };
@@ -84,6 +89,47 @@ const sipResult = computed(() => {
   }
 
   const investedAmount = investment * months;
+  const estimatedReturns = Math.max(0, totalValue - investedAmount);
+
+  return {
+    investedAmount,
+    estimatedReturns,
+    totalValue,
+  };
+});
+
+const stepUpSipResult = computed(() => {
+  if (!calculator.value || calculator.value.id !== "step-up-sip") {
+    return null;
+  }
+
+  const investment = Number(monthlyInvestment.value) || 0;
+  const rate = Number(expectedReturnRate.value) || 0;
+  const years = Number(timePeriodYears.value) || 0;
+  const stepUp = Number(stepUpPercentage.value) || 0;
+  const months = Math.max(0, years * 12);
+
+  if (months === 0 || investment <= 0) {
+    return {
+      investedAmount: 0,
+      estimatedReturns: 0,
+      totalValue: 0,
+    };
+  }
+
+  const rateValue = rate / 100;
+  const monthlyRate = Math.pow(1 + rateValue, 1 / 12) - 1;
+  const stepUpRate = stepUp / 100;
+  let totalValue = 0;
+  let investedAmount = 0;
+
+  for (let month = 0; month < months; month += 1) {
+    const yearIndex = Math.floor(month / 12);
+    const contribution = investment * Math.pow(1 + stepUpRate, yearIndex);
+    investedAmount += contribution;
+    totalValue = (totalValue + contribution) * (1 + monthlyRate);
+  }
+
   const estimatedReturns = Math.max(0, totalValue - investedAmount);
 
   return {
@@ -161,7 +207,7 @@ const simpleInterestResult = computed(() => {
 });
 
 const compoundInterestResult = computed(() => {
-  if (!calculator.value || calculator.value.id !== "compound-interest") {
+  if (!calculator.value || calculator.value.id !== "compound-growth") {
     return null;
   }
 
@@ -185,6 +231,39 @@ const compoundInterestResult = computed(() => {
     totalValue: Math.max(0, totalValue),
   };
 });
+
+const cagrResult = computed(() => {
+  if (!calculator.value || calculator.value.id !== "cagr") {
+    return null;
+  }
+
+  const startValue = Number(cagrStartValue.value) || 0;
+  const endValue = Number(cagrEndValue.value) || 0;
+  const years = Number(cagrYears.value) || 0;
+
+  if (startValue <= 0 || endValue <= 0 || years <= 0) {
+    return {
+      startValue: Math.max(0, startValue),
+      endValue: Math.max(0, endValue),
+      years: Math.max(0, years),
+      cagr: 0,
+      totalReturn: Math.max(0, endValue - startValue),
+    };
+  }
+
+  const cagr = Math.pow(endValue / startValue, 1 / years) - 1;
+  const totalReturn = Math.max(0, endValue - startValue);
+
+  return {
+    startValue,
+    endValue,
+    years,
+    cagr: Math.max(0, cagr),
+    totalReturn,
+  };
+});
+
+const formatPercent = (value: number) => `${(value * 100).toFixed(2)}%`;
 
 const formatCurrency = (value: number) =>
   new Intl.NumberFormat("en-IN", {
@@ -264,6 +343,73 @@ const formatCurrency = (value: number) =>
 
       <div
         class="detail__panel"
+        v-else-if="calculator.id === 'step-up-sip' && stepUpSipResult"
+      >
+        <h2>Step-up SIP</h2>
+        <div class="calculator-layout">
+          <form class="form" @submit.prevent>
+            <SliderField
+              v-model="monthlyInvestment"
+              label="Monthly investment"
+              unit="₹"
+              :min="0"
+              :max="200000"
+              :step="500"
+            />
+            <SliderField
+              v-model="expectedReturnRate"
+              label="Expected return rate"
+              unit="% p.a."
+              :min="0"
+              :max="30"
+              :step="0.1"
+            />
+            <SliderField
+              v-model="timePeriodYears"
+              label="Time period"
+              unit="years"
+              :min="0"
+              :max="40"
+              :step="1"
+            />
+            <SliderField
+              v-model="stepUpPercentage"
+              label="Step-up percentage"
+              unit="% per year"
+              :min="0"
+              :max="30"
+              :step="0.5"
+            />
+          </form>
+
+          <div class="calculator-results">
+            <div class="results">
+              <div class="result-card result-card--invested">
+                <span>Invested amount</span>
+                <strong>{{ formatCurrency(stepUpSipResult.investedAmount) }}</strong>
+              </div>
+              <div class="result-card result-card--returns">
+                <span>Estimated returns</span>
+                <strong>{{ formatCurrency(stepUpSipResult.estimatedReturns) }}</strong>
+              </div>
+              <div class="result-card result-card--total">
+                <span>Total value</span>
+                <strong>{{ formatCurrency(stepUpSipResult.totalValue) }}</strong>
+              </div>
+            </div>
+
+            <div class="chart">
+              <PieChart
+                :invested="stepUpSipResult.investedAmount"
+                :returns="stepUpSipResult.estimatedReturns"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="detail__panel"
         v-else-if="calculator.id === 'future-value' && futureValueResult"
       >
         <h2>Future value</h2>
@@ -275,7 +421,7 @@ const formatCurrency = (value: number) =>
               unit="₹"
               :min="0"
               :max="5000000"
-              :step="10000"
+              :step="1000"
             />
             <SliderField
               v-model="lumpSumReturnRate"
@@ -311,7 +457,7 @@ const formatCurrency = (value: number) =>
               unit="₹"
               :min="0"
               :max="1000000"
-              :step="5000"
+              :step="1000"
             />
           </form>
 
@@ -366,7 +512,7 @@ const formatCurrency = (value: number) =>
               unit="₹"
               :min="0"
               :max="5000000"
-              :step="10000"
+              :step="1000"
             />
             <SliderField
               v-model="simpleInterestRate"
@@ -420,9 +566,9 @@ const formatCurrency = (value: number) =>
 
       <div
         class="detail__panel"
-        v-else-if="calculator.id === 'compound-interest' && compoundInterestResult"
+        v-else-if="calculator.id === 'compound-growth' && compoundInterestResult"
       >
-        <h2>Compound interest</h2>
+        <h2>Compound interest/return</h2>
         <div class="calculator-layout">
           <form class="form" @submit.prevent>
             <SliderField
@@ -431,7 +577,7 @@ const formatCurrency = (value: number) =>
               unit="₹"
               :min="0"
               :max="5000000"
-              :step="10000"
+              :step="1000"
             />
             <SliderField
               v-model="compoundInterestRate"
@@ -495,13 +641,63 @@ const formatCurrency = (value: number) =>
         </div>
       </div>
 
+      <div class="detail__panel" v-else-if="calculator.id === 'cagr' && cagrResult">
+        <h2>CAGR</h2>
+        <div class="calculator-layout">
+          <form class="form" @submit.prevent>
+            <SliderField
+              v-model="cagrStartValue"
+              label="Starting value"
+              unit="₹"
+              :min="0"
+              :max="5000000"
+              :step="100"
+            />
+            <SliderField
+              v-model="cagrEndValue"
+              label="Ending value"
+              unit="₹"
+              :min="0"
+              :max="10000000"
+              :step="100"
+            />
+            <SliderField
+              v-model="cagrYears"
+              label="Time period"
+              unit="years"
+              :min="0"
+              :max="100"
+              :step="1"
+            />
+          </form>
+
+          <div class="calculator-results">
+            <div class="results">
+              <div class="result-card result-card--invested">
+                <span>Starting value</span>
+                <strong>{{ formatCurrency(cagrResult.startValue) }}</strong>
+              </div>
+              <div class="result-card">
+                <span>Ending value</span>
+                <strong>{{ formatCurrency(cagrResult.endValue) }}</strong>
+              </div>
+              <div class="result-card result-card--returns">
+                <span>CAGR</span>
+                <strong>{{ formatPercent(cagrResult.cagr) }}</strong>
+              </div>
+            </div>
+
+            <div class="chart">
+              <PieChart
+                :invested="cagrResult.startValue"
+                :returns="cagrResult.totalReturn"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="detail__panel" v-else>
-        <h2>Inputs you'll need</h2>
-        <ul>
-          <li v-for="field in calculator.fields" :key="field">
-            {{ field }}
-          </li>
-        </ul>
         <p class="note">
           This is a placeholder layout for the {{ calculator.title }} page.
           Connect the form and calculation logic here when ready.

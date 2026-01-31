@@ -26,10 +26,10 @@ defineProps<{
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(6px);
   box-shadow: 0 18px 36px rgba(14, 28, 50, 0.12);
-  transition: transform 0.25s ease, box-shadow 0.25s ease,
-    border-color 0.25s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   position: relative;
   overflow: hidden;
+  height: 190px;
 }
 
 .card::after {
@@ -76,6 +76,7 @@ button,
 .card__link {
   justify-self: start;
   align-items: center;
+  align-self: end;
   border: none;
   background: linear-gradient(135deg, #0b3a6e, #1f6fd5);
   color: #fff;
@@ -86,6 +87,7 @@ button,
   text-decoration: none;
   display: inline-flex;
   box-shadow: 0 10px 20px rgba(11, 58, 110, 0.22);
+  height: 48px;
 }
 
 button:hover,
