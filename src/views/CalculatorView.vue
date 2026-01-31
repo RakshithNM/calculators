@@ -87,8 +87,16 @@ const futureValueResult = computed(() => {
   const frequency = frequencyOptions.find((option) => option.value === investmentFrequency.value)?.perYear ?? 1;
 
   if (principal <= 0 || years <= 0) {
+    const periods = Math.max(
+      0,
+      years *
+        (frequencyOptions.find((option) => option.value === investmentFrequency.value)
+          ?.perYear ?? 1)
+    );
     return {
+      presentValue: Math.max(0, principal),
       investedAmount: Math.max(0, principal),
+      periodicAmount: Math.max(0, periodic * periods),
       estimatedReturns: 0,
       totalValue: Math.max(0, principal),
     };
@@ -102,11 +110,14 @@ const futureValueResult = computed(() => {
   const futurePeriodic = annualRate === 0 ? periodic * years : periodic * ((Math.pow(1 + periodicRate, periods) - 1) / periodicRate);
 
   const totalValue = futurePrincipal + futurePeriodic;
-  const investedAmount = Math.max(0, principal + periodic * periods);
+  const periodicTotal = Math.max(0, periodic * periods);
+  const investedAmount = Math.max(0, principal + periodicTotal);
   const estimatedReturns = Math.max(0, totalValue - investedAmount);
 
   return {
+    presentValue: Math.max(0, principal),
     investedAmount,
+    periodicAmount: periodicTotal,
     estimatedReturns,
     totalValue,
   };
@@ -216,7 +227,7 @@ const formatCurrency = (value: number) =>
               label="Time period"
               unit="years"
               :min="0"
-              :max="40"
+              :max="100"
               :step="1"
             />
             <label class="select-field">
@@ -244,9 +255,15 @@ const formatCurrency = (value: number) =>
           <div class="calculator-results">
             <div class="results">
               <div class="result-card result-card--invested">
-                <span>Invested amount</span>
+                <span>Present value (lumpsum)</span>
                 <strong>{{
-                  formatCurrency(futureValueResult.investedAmount)
+                  formatCurrency(futureValueResult.presentValue)
+                }}</strong>
+              </div>
+              <div class="result-card">
+                <span>Total periodic investment</span>
+                <strong>{{
+                  formatCurrency(futureValueResult.periodicAmount)
                 }}</strong>
               </div>
               <div class="result-card result-card--returns">

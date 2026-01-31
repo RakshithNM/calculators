@@ -21,12 +21,39 @@ defineProps<{
   display: grid;
   gap: 0.75rem;
   padding: 1.25rem;
-  border: 1px solid rgba(10, 20, 30, 0.12);
+  border: 1px solid rgba(11, 58, 110, 0.16);
   border-radius: 16px;
-  corner-shape: squircle;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(6px);
-  box-shadow: 0 14px 30px rgba(14, 28, 50, 0.08);
+  box-shadow: 0 18px 36px rgba(14, 28, 50, 0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease,
+    border-color 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    130deg,
+    rgba(11, 58, 110, 0.08),
+    transparent 55%
+  );
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 26px 50px rgba(14, 28, 50, 0.18);
+  border-color: rgba(31, 111, 213, 0.35);
+}
+
+.card:hover::after {
+  opacity: 1;
 }
 
 h3 {
@@ -50,19 +77,19 @@ button,
   justify-self: start;
   align-items: center;
   border: none;
-  background: #0b3a6e;
+  background: linear-gradient(135deg, #0b3a6e, #1f6fd5);
   color: #fff;
   padding: 0.55rem 1rem;
   border-radius: 999px;
-  corner-shape: squircle;
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
   display: inline-flex;
+  box-shadow: 0 10px 20px rgba(11, 58, 110, 0.22);
 }
 
 button:hover,
 .card__link:hover {
-  background: #0e4c92;
+  background: linear-gradient(135deg, #0e4c92, #2a7af0);
 }
 </style>
