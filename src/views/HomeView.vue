@@ -11,7 +11,7 @@ import { calculators } from "../data/calculators";
         <h1>Investment calculators built for confident decisions.</h1>
         <p class="subhead">
           Track SIPs, forecast future value, compare CAGR, and plan milestones
-          with a focused suite of tools for retail investors.
+          with a focused suite of tools for financial calculations.
         </p>
       </div>
       <div class="panel">

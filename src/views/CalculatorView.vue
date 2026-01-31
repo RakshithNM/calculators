@@ -286,7 +286,6 @@ const formatCurrency = (value: number) =>
       </div>
 
       <div class="detail__panel" v-if="calculator.id === 'sip' && sipResult">
-        <h2>Plan your SIP</h2>
         <div class="calculator-layout">
           <form class="form" @submit.prevent>
             <SliderField
@@ -331,7 +330,7 @@ const formatCurrency = (value: number) =>
               </div>
             </div>
 
-            <div class="chart">
+            <div class="chart chart-card">
               <PieChart
                 :invested="sipResult.investedAmount"
                 :returns="sipResult.estimatedReturns"
@@ -345,7 +344,6 @@ const formatCurrency = (value: number) =>
         class="detail__panel"
         v-else-if="calculator.id === 'step-up-sip' && stepUpSipResult"
       >
-        <h2>Step-up SIP</h2>
         <div class="calculator-layout">
           <form class="form" @submit.prevent>
             <SliderField
@@ -398,7 +396,7 @@ const formatCurrency = (value: number) =>
               </div>
             </div>
 
-            <div class="chart">
+            <div class="chart chart-card">
               <PieChart
                 :invested="stepUpSipResult.investedAmount"
                 :returns="stepUpSipResult.estimatedReturns"
@@ -412,7 +410,6 @@ const formatCurrency = (value: number) =>
         class="detail__panel"
         v-else-if="calculator.id === 'future-value' && futureValueResult"
       >
-        <h2>Future value</h2>
         <div class="calculator-layout">
           <form class="form" @submit.prevent>
             <SliderField
@@ -489,7 +486,7 @@ const formatCurrency = (value: number) =>
               </div>
             </div>
 
-            <div class="chart">
+            <div class="chart chart-card">
               <PieChart
                 :invested="futureValueResult.investedAmount"
                 :returns="futureValueResult.estimatedReturns"
@@ -503,7 +500,6 @@ const formatCurrency = (value: number) =>
         class="detail__panel"
         v-else-if="calculator.id === 'simple-interest' && simpleInterestResult"
       >
-        <h2>Simple interest</h2>
         <div class="calculator-layout">
           <form class="form" @submit.prevent>
             <SliderField
@@ -554,7 +550,7 @@ const formatCurrency = (value: number) =>
               </div>
             </div>
 
-            <div class="chart">
+            <div class="chart chart-card">
               <PieChart
                 :invested="simpleInterestResult.principal"
                 :returns="simpleInterestResult.interest"
@@ -568,7 +564,6 @@ const formatCurrency = (value: number) =>
         class="detail__panel"
         v-else-if="calculator.id === 'compound-growth' && compoundInterestResult"
       >
-        <h2>Compound interest/return</h2>
         <div class="calculator-layout">
           <form class="form" @submit.prevent>
             <SliderField
@@ -631,7 +626,7 @@ const formatCurrency = (value: number) =>
               </div>
             </div>
 
-            <div class="chart">
+            <div class="chart chart-card">
               <PieChart
                 :invested="compoundInterestResult.principal"
                 :returns="compoundInterestResult.interest"
@@ -642,7 +637,6 @@ const formatCurrency = (value: number) =>
       </div>
 
       <div class="detail__panel" v-else-if="calculator.id === 'cagr' && cagrResult">
-        <h2>CAGR</h2>
         <div class="calculator-layout">
           <form class="form" @submit.prevent>
             <SliderField
@@ -687,7 +681,7 @@ const formatCurrency = (value: number) =>
               </div>
             </div>
 
-            <div class="chart">
+            <div class="chart chart-card">
               <PieChart
                 :invested="cagrResult.startValue"
                 :returns="cagrResult.totalReturn"
