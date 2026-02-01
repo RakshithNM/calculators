@@ -112,7 +112,14 @@ const compoundInterestResult = computed(() => {
       <pre>r = R / f
 n = years * f
 FV = P * (1 + r)^n
-Interest = FV - P</pre>
+Interest = FV - P
+
+Where:
+P = principal amount
+R = annual interest rate (as a decimal)
+f = compounding frequency per year
+r = rate per period
+n = total periods</pre>
     </section>
   </div>
 </template>

@@ -160,7 +160,19 @@ g_m = (1 + i)^(1/12) - 1
 n = 12 * R
 Corpus = E_R * (1 - ((1 + g_m) / (1 + r_m))^n) / (r_m - g_m) * (1 + r_m)
 r_sip = (1 + r_pre)^(1/12) - 1
-SIP = Corpus * r_sip / ((1 + r_sip)^n - 1) / (1 + r_sip)</pre>
+SIP = Corpus * r_sip / ((1 + r_sip)^n - 1) / (1 + r_sip)
+
+Where:
+E_0 = current monthly expense
+E_R = monthly expense at retirement
+i = annual inflation rate (as a decimal)
+N = years to retirement
+R = years in retirement
+r_post = post-retirement return (annual, decimal)
+r_pre = pre-retirement return (annual, decimal)
+r_m = post-retirement monthly return rate
+g_m = monthly inflation rate
+n = total retirement months (12 * R)</pre>
     </section>
   </div>
 </template>

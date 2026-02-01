@@ -81,7 +81,12 @@ const simpleInterestResult = computed(() => {
     <section class="formula">
       <h3>Formula</h3>
       <pre>Interest = P * R * T / 100
-Total = P + Interest</pre>
+Total = P + Interest
+
+Where:
+P = principal amount
+R = annual interest rate (%)
+T = time period (years)</pre>
     </section>
   </div>
 </template>

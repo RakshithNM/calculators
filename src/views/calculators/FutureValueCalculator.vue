@@ -148,7 +148,15 @@ const futureValueResult = computed(() => {
 n = years * f
 FV = P * (1 + r)^n + A * ((1 + r)^n - 1) / r
 Invested = P + A * n
-Returns = FV - Invested</pre>
+Returns = FV - Invested
+
+Where:
+P = initial principal (lumpsum)
+A = periodic investment amount
+R = expected annual return (as a decimal)
+f = contribution frequency per year
+r = return per period
+n = total periods</pre>
     </section>
   </div>
 </template>

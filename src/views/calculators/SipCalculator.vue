@@ -106,7 +106,13 @@ const sipResult = computed(() => {
 n = 12 * years
 FV = P * ((1 + r)^n - 1) / r * (1 + r)
 Invested = P * n
-Returns = FV - Invested</pre>
+Returns = FV - Invested
+
+Where:
+P = monthly investment
+R = expected annual return (as a decimal)
+r = monthly return rate
+n = total months</pre>
     </section>
   </div>
 </template>

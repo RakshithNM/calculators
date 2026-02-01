@@ -120,7 +120,14 @@ const goalPlannerResult = computed(() => {
       <pre>Future Goal = Goal * (1 + i)^years
 Future Existing = Existing * (1 + r_m)^n
 Shortfall = Future Goal - Future Existing
-Monthly SIP = Shortfall * r_m / ((1 + r_m)^n - 1)</pre>
+Monthly SIP = Shortfall * r_m / ((1 + r_m)^n - 1)
+
+Where:
+Goal = target amount today
+Existing = current investment towards goal
+i = annual inflation rate (as a decimal)
+r_m = monthly return rate
+n = total months (12 * years)</pre>
     </section>
   </div>
 </template>

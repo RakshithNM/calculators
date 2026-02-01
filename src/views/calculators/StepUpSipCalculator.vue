@@ -117,7 +117,15 @@ Monthly contribution in year y:
 P_y = P * (1 + s)^y
 FV = sum over months of (contribution * (1 + r)^(remaining months))
 Invested = sum of contributions
-Returns = FV - Invested</pre>
+Returns = FV - Invested
+
+Where:
+P = starting monthly investment
+s = annual step-up rate (as a decimal)
+R = expected annual return (as a decimal)
+r = monthly return rate
+y = year index starting at 0
+n = total months</pre>
     </section>
   </div>
 </template>
