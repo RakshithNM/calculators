@@ -54,6 +54,12 @@ export const calculators: CalculatorInfo[] = [
     description: "Estimate retirement corpus and monthly savings needed.",
     path: "/retirement-calculator",
   },
+  {
+    id: "loan",
+    title: "Loan EMI",
+    description: "Calculate EMI and payoff time with extra payments.",
+    path: "/loan-calculator",
+  },
   // {
   //   id: "mutual-fund-returns",
   //   title: "Mutual Fund Returns Calculator",

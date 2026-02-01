@@ -9,6 +9,7 @@
 [*] Mutual Fund Returns Calculator: A general tool to calculate historical or expected returns (CAGR/XIRR).
 [*] Goal Planner: Calculate monthly savings for a target goal.
 [*] Retirement Corpus: Plan how much you need to retire comfortably.
+[*] Loan calculator: How long does it take to clear the loan?
 [ ] Lumpsum Calculator: Projects the future value of a single, one-time investment.
 [ ] SWP (Systematic Withdrawal Plan) Calculator: Helps determine how much money can be withdrawn regularly while leaving the remaining amount invested.
 [ ] SSY (Sukanya Samriddhi Yojana Calculator): Calculate returns for Sukanya Samriddhi Yojana Calculator as per your investment.

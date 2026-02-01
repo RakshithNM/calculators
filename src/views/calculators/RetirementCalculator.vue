@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import SliderField from "../../components/SliderField.vue";
-import PieChart from "../../components/PieChart.vue";
 import { formatCurrency } from "../../utils/formatters";
 
 const currentAge = ref(30);

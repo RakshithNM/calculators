@@ -10,6 +10,7 @@ import CompoundInterestCalculator from "./calculators/CompoundInterestCalculator
 import CagrCalculator from "./calculators/CagrCalculator.vue";
 import GoalPlannerCalculator from "./calculators/GoalPlannerCalculator.vue";
 import RetirementCalculator from "./calculators/RetirementCalculator.vue";
+import LoanCalculator from "./calculators/LoanCalculator.vue";
 
 const props = defineProps<{
   calculatorId: string;
@@ -38,6 +39,8 @@ const calculatorComponent = computed(() => {
       return GoalPlannerCalculator;
     case "retirement":
       return RetirementCalculator;
+    case "loan":
+      return LoanCalculator;
     default:
       return null;
   }
