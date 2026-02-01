@@ -142,5 +142,13 @@ const futureValueResult = computed(() => {
         </div>
       </div>
     </div>
+    <section class="formula">
+      <h3>Formula</h3>
+      <pre>r = R / f
+n = years * f
+FV = P * (1 + r)^n + A * ((1 + r)^n - 1) / r
+Invested = P + A * n
+Returns = FV - Invested</pre>
+    </section>
   </div>
 </template>

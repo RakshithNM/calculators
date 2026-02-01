@@ -152,5 +152,15 @@ const retirementResult = computed(() => {
         </div>
       </div>
     </div>
+    <section class="formula">
+      <h3>Formula</h3>
+      <pre>E_R = E_0 * (1 + i)^N
+r_m = (1 + r_post)^(1/12) - 1
+g_m = (1 + i)^(1/12) - 1
+n = 12 * R
+Corpus = E_R * (1 - ((1 + g_m) / (1 + r_m))^n) / (r_m - g_m) * (1 + r_m)
+r_sip = (1 + r_pre)^(1/12) - 1
+SIP = Corpus * r_sip / ((1 + r_sip)^n - 1) / (1 + r_sip)</pre>
+    </section>
   </div>
 </template>

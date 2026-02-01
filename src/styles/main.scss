@@ -353,6 +353,28 @@ h1 {
   box-shadow: 0 12px 30px rgba(11, 58, 110, 0.12);
 }
 
+.formula {
+  margin-top: 2rem;
+  padding: 1.25rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px dashed rgba(11, 58, 110, 0.2);
+  box-shadow: 0 10px 22px rgba(11, 58, 110, 0.08);
+}
+
+.formula h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1.05rem;
+}
+
+.formula pre {
+  margin: 0;
+  white-space: pre-wrap;
+  font-family: "Space Grotesk", "Trebuchet MS", sans-serif;
+  font-size: 0.95rem;
+  color: #2a3b50;
+}
+
 .note {
   margin: 0;
   color: #2b3c50;

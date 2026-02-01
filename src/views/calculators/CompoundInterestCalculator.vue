@@ -107,5 +107,12 @@ const compoundInterestResult = computed(() => {
         </div>
       </div>
     </div>
+    <section class="formula">
+      <h3>Formula</h3>
+      <pre>r = R / f
+n = years * f
+FV = P * (1 + r)^n
+Interest = FV - P</pre>
+    </section>
   </div>
 </template>

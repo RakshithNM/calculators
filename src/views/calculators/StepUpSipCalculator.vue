@@ -109,5 +109,15 @@ const stepUpSipResult = computed(() => {
         </div>
       </div>
     </div>
+    <section class="formula">
+      <h3>Formula</h3>
+      <pre>r = (1 + R)^(1/12) - 1
+n = 12 * years
+Monthly contribution in year y:
+P_y = P * (1 + s)^y
+FV = sum over months of (contribution * (1 + r)^(remaining months))
+Invested = sum of contributions
+Returns = FV - Invested</pre>
+    </section>
   </div>
 </template>

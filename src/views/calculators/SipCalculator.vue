@@ -100,5 +100,13 @@ const sipResult = computed(() => {
         </div>
       </div>
     </div>
+    <section class="formula">
+      <h3>Formula</h3>
+      <pre>r = (1 + R)^(1/12) - 1
+n = 12 * years
+FV = P * ((1 + r)^n - 1) / r * (1 + r)
+Invested = P * n
+Returns = FV - Invested</pre>
+    </section>
   </div>
 </template>

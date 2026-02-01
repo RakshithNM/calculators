@@ -115,5 +115,12 @@ const goalPlannerResult = computed(() => {
         </div>
       </div>
     </div>
+    <section class="formula">
+      <h3>Formula</h3>
+      <pre>Future Goal = Goal * (1 + i)^years
+Future Existing = Existing * (1 + r_m)^n
+Shortfall = Future Goal - Future Existing
+Monthly SIP = Shortfall * r_m / ((1 + r_m)^n - 1)</pre>
+    </section>
   </div>
 </template>

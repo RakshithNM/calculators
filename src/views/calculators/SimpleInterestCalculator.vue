@@ -78,5 +78,10 @@ const simpleInterestResult = computed(() => {
         </div>
       </div>
     </div>
+    <section class="formula">
+      <h3>Formula</h3>
+      <pre>Interest = P * R * T / 100
+Total = P + Interest</pre>
+    </section>
   </div>
 </template>

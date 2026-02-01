@@ -88,5 +88,9 @@ const cagrResult = computed(() => {
         </div>
       </div>
     </div>
+    <section class="formula">
+      <h3>Formula</h3>
+      <pre>CAGR = (End / Start)^(1/years) - 1</pre>
+    </section>
   </div>
 </template>
