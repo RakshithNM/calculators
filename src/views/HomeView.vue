@@ -8,7 +8,7 @@ import { calculators } from "../data/calculators";
     <section class="hero">
       <div>
         <p class="eyebrow">Financial Calculators 🔢</p>
-        <h1>Investment calculators built for confident decisions.</h1>
+        <h1>Financial calculators built for confident decisions.</h1>
         <p class="subhead">
           Track SIPs, forecast future value, compare CAGR, and plan milestones
           with a focused suite of tools for financial calculations.
